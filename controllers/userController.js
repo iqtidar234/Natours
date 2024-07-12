@@ -30,7 +30,7 @@ exports.resizeUserPhoto = (req, res, next) => {
   if (!req.file) return next();
 
   // resize image using Sharp
-  req.file.fileName = `user-${req.user.id}-${Date.now()}.jpeg`;
+  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
   sharp(req.file.buffer)
     .resize(500, 500)
     .toFormat('jpeg')
@@ -61,7 +61,6 @@ exports.getUsers = catchAsync(async (req, res) => {
 });
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  console.log(req.file);
   // 1) Create error if user posted password data
   if (req?.body?.password || req?.body?.passwordConfirm) {
     return next(
