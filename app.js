@@ -8,6 +8,7 @@ const reviewRouter = require('./routes/reviewRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const rateLimit = require('express-rate-limit');
+const bookingController = require('./controllers/bookingController');
 const helmet = require('helmet');
 // const mongoSenetize = require('express-mongo-senetize');
 const xss = require('xss-clean');
@@ -62,12 +63,17 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/', (req, res) => {
+  res.send('server is running');
+});
+
 app.use((req, res, next) => {
   req.time = new Date().toISOString();
   next();
 });
 
 // ROUTES
+app.use('/', bookingController.createBookingCheckout);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);

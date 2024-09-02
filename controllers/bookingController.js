@@ -46,5 +46,5 @@ exports.createBookingCheckout = catchAsync(async (req, res, next) => {
 
   await Booking.create({ tour, price, user });
 
-  next();
+  res.redirect(req.originalUrl.split('?')[0]);
 });
